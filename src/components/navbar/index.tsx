@@ -1,4 +1,12 @@
-import { ChevronDown, Menu, Search, ShoppingCart, User, X } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  Menu,
+  Search,
+  ShoppingCart,
+  User,
+  X,
+} from "lucide-react";
 import { useState } from "react";
 import { useDispatch } from "../../redux/store";
 import Auth from "../../pages/auth/auth";
@@ -18,6 +26,7 @@ function Navbar() {
   const [authModal, setAuthModal] = useState(false);
   const [type, setType] = useState("login");
   const [dropdown, setDropdown] = useState(false);
+  const [menu, setMenu] = useState(false);
 
   const {
     data: categories,
@@ -37,7 +46,9 @@ function Navbar() {
   const toggleDropdown = () => {
     setDropdown(!dropdown);
   };
-
+  const toggleMenu = () => {
+    setMenu(!menu);
+  };
   const switchAuthType = () => {
     setType(type === "login" ? "signup" : "login");
   };
@@ -65,9 +76,17 @@ function Navbar() {
         {/* Nav Links */}
         <div className="hidden lg:flex space-x-6 w-full">
           <div className="dropdown dropdown-start">
-            <label tabIndex={0} className="cursor-pointer flex items-center">
+            <label
+              tabIndex={0}
+              onClick={toggleMenu}
+              className="cursor-pointer flex items-center"
+            >
               Shop
-              <ChevronDown size={16} className="ml-1" />
+              {menu ? (
+                <ChevronUp size={16} className="ml-1" />
+              ) : (
+                <ChevronDown size={16} className="ml-1" />
+              )}
             </label>
             <ul
               tabIndex={0}
@@ -206,9 +225,33 @@ function Navbar() {
             </button>
           </div>
           <div className="py-4 px-8">
-            <a href="#" className="block py-2">
-              Shop
-            </a>
+            <div className="">
+              <label
+                tabIndex={0}
+                onClick={toggleMenu}
+                className="cursor-pointer flex items-center"
+              >
+                Shop
+                {menu ? (
+                  <ChevronUp size={16} className="ml-1" />
+                ) : (
+                  <ChevronDown size={16} className="ml-1" />
+                )}
+              </label>
+              {menu ? (
+                <ul className="menu bg-gray-100 pl-0">
+                  {categories?.map((category: string, index: number) => (
+                    <li key={index} className=" capitalize">
+                      <Link to={`/products/category/${category}`}>
+                        {category}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                ""
+              )}
+            </div>
             <a href="#" className="block py-2">
               On Sale
             </a>
