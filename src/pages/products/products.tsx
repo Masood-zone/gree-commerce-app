@@ -5,7 +5,18 @@ import { storeApi } from "../../redux/api";
 function Products() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<string>("popularity");
-  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<
+    {
+      id: number;
+      name: string;
+      price: number;
+      category: string;
+      rating: {
+        rate: number;
+        count: number;
+      };
+    }[]
+  >([]);
 
   const {
     data: categories,
@@ -100,8 +111,14 @@ function Products() {
         <div className="w-full md:w-3/4">
           <ProductsList
             isLoading={productsLoading}
-            error={productsError}
-            products={filteredProducts}
+            error={productsError as { data: string } | undefined}
+            products={filteredProducts.map((product) => ({
+              id: product.id,
+              image: "", // Add the appropriate image property here
+              title: product.name, // Use the name property as the title
+              rating: { rate: product.rating.rate },
+              price: product.price,
+            }))}
           />
         </div>
       </div>

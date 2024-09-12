@@ -6,9 +6,19 @@ import { userActions } from "../../redux/user.slice";
 import { Link } from "react-router-dom";
 import { storeApi } from "../../redux/api";
 
+interface RootState {
+  persistedReducer:
+    | {
+        user: {
+          isAuthenticated: boolean;
+        };
+      }
+    | unknown;
+}
+
 function Navbar() {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.persistedReducer);
+  const user = useSelector((state: RootState) => state.persistedReducer.user);
   const logout = userActions;
 
   const [sideMenu, setSideMenu] = useState(false);

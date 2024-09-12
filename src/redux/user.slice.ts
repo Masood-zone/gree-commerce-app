@@ -1,6 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
+const initialState: {
+  user: {
+    username: string;
+    password: string;
+  };
+  token: string;
+  isAuthenticating: boolean;
+} = {
   user: {
     username: "",
     password: "",

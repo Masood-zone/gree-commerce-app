@@ -16,7 +16,11 @@ export const NewArrivals = () => {
         new arrivals
       </h2>
       {/* Products List */}
-      <ProductsList products={products} isLoading={isLoading} error={error} />
+      <ProductsList
+        products={products}
+        isLoading={isLoading}
+        error={error as { data: string } | undefined}
+      />
       {/* Button */}
       {error ? (
         ""
@@ -48,7 +52,11 @@ export const TopProducts = () => {
         Top Selling
       </h2>
       {/* Products List */}
-      <ProductsList products={products} isLoading={isLoading} error={error} />
+      <ProductsList
+        products={products}
+        isLoading={isLoading}
+        error={error as { data: string } | undefined}
+      />
       {/* Button */}
       {error ? (
         ""

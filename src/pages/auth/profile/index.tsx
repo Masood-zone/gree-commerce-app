@@ -144,7 +144,7 @@ function Profile() {
       </div>
     );
 
-  const handleSaveUser = (editedUser) => {
+  const handleSaveUser = (editedUser: User) => {
     console.log("Saving user:", editedUser);
   };
 

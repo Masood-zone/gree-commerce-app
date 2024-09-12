@@ -6,7 +6,9 @@ function ProductsList({
   products,
 }: {
   isLoading: boolean;
-  error: Error;
+  error?: {
+    data: string;
+  };
   products: {
     id: number;
     image: string;

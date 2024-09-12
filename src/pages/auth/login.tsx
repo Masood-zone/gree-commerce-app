@@ -46,7 +46,13 @@ function Login({
     } catch (error) {
       console.log(error);
       reset();
-      toast.error(error.data);
+      toast.error(
+        (
+          error as {
+            data: string;
+          }
+        ).data
+      );
     }
   };
   return (
