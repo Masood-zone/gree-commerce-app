@@ -9,10 +9,8 @@ import { storeApi } from "../../redux/api";
 function Navbar() {
   const dispatch = useDispatch();
   // Using LocalStorage to get the user data
-  const userData = JSON.parse(
-    localStorage.getItem("persist:gree-commerce-portal") || "{}"
-  );
-  const user = JSON.parse(userData?.user);
+  const userData = localStorage.getItem("persist:gree-commerce-portal");
+  const user = userData ? JSON.parse(JSON.parse(userData).user || "{}") : null;
   const logout = userActions;
 
   const [sideMenu, setSideMenu] = useState(false);

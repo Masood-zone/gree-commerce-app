@@ -14,23 +14,48 @@ import Profile from "./auth/profile";
 import DeleteAccount from "./auth/profile/deleteAccount";
 import ProfileLayout from "./auth/profile/profile";
 import CheckoutSuccess from "./cart/checkout";
+import ErrorBoundary from "../components/error/errorBoundary";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Layout />}>
-      <Route index element={<Home />} />
+    <Route path="/" element={<Layout />} errorElement={<ErrorBoundary />}>
+      <Route index element={<Home />} errorElement={<ErrorBoundary />} />
 
-      <Route path="products" element={<ProductsLayout />}>
-        <Route index element={<Products />} />
-        <Route path="category/:category" element={<ProductIndex />} />
-        <Route path=":id" element={<ProductDetail />} />
+      <Route
+        path="products"
+        errorElement={<ErrorBoundary />}
+        element={<ProductsLayout />}
+      >
+        <Route index element={<Products />} errorElement={<ErrorBoundary />} />
+        <Route
+          path="category/:category"
+          element={<ProductIndex />}
+          errorElement={<ErrorBoundary />}
+        />
+        <Route
+          path=":id"
+          element={<ProductDetail />}
+          errorElement={<ErrorBoundary />}
+        />
       </Route>
-      <Route path="profile" element={<ProfileLayout />}>
-        <Route index element={<Profile />} />
-        <Route path="/profile/delete-account" element={<DeleteAccount />} />
+      <Route
+        path="profile"
+        element={<ProfileLayout />}
+        errorElement={<ErrorBoundary />}
+      >
+        <Route index element={<Profile />} errorElement={<ErrorBoundary />} />
+        <Route
+          path="/profile/delete-account"
+          element={<DeleteAccount />}
+          errorElement={<ErrorBoundary />}
+        />
       </Route>
-      <Route path="cart" element={<Cart />} />
-      <Route path="checkout" element={<CheckoutSuccess />} />
+      <Route path="cart" element={<Cart />} errorElement={<ErrorBoundary />} />
+      <Route
+        path="checkout"
+        errorElement={<ErrorBoundary />}
+        element={<CheckoutSuccess />}
+      />
     </Route>
   )
 );
