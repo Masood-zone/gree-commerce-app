@@ -1,24 +1,16 @@
 import { ChevronDown, Menu, Search, ShoppingCart, User, X } from "lucide-react";
 import { useState } from "react";
-import { useDispatch, useSelector } from "../../redux/store";
+import { useDispatch } from "../../redux/store";
 import Auth from "../../pages/auth/auth";
 import { userActions } from "../../redux/user.slice";
 import { Link } from "react-router-dom";
 import { storeApi } from "../../redux/api";
-
-interface RootState {
-  persistedReducer:
-    | {
-        user: {
-          isAuthenticated: boolean;
-        };
-      }
-    | unknown;
-}
+import { RootState } from "../../redux/reducer";
+import { useSelector } from "react-redux";
 
 function Navbar() {
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.persistedReducer.user);
+  const user = useSelector((state: RootState) => state.user);
   const logout = userActions;
 
   const [sideMenu, setSideMenu] = useState(false);

@@ -1,5 +1,5 @@
 import persistReducer from "redux-persist/es/persistReducer";
-import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import createWebStorage from "redux-persist/es/storage/createWebStorage";
 import {
   useSelector as useReduxSelector,
@@ -41,10 +41,3 @@ export type ReduxStore = typeof store;
 export type ReduxState = ReturnType<typeof store.getState>;
 export type RootState = ReturnType<typeof rootReducer>;
 export type ReduxDispatch = typeof store.dispatch;
-
-export type ReduxThunkAction<ReturnType = void> = ThunkAction<
-  ReturnType,
-  ReduxState,
-  unknown,
-  Action
->;
