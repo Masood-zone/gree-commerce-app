@@ -5,12 +5,14 @@ import Auth from "../../pages/auth/auth";
 import { userActions } from "../../redux/user.slice";
 import { Link } from "react-router-dom";
 import { storeApi } from "../../redux/api";
-import { RootState } from "../../redux/reducer";
-import { useSelector } from "react-redux";
 
 function Navbar() {
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.user);
+  // Using LocalStorage to get the user data
+  const userData = JSON.parse(
+    localStorage.getItem("persist:gree-commerce-portal") || "{}"
+  );
+  const user = JSON.parse(userData.user);
   const logout = userActions;
 
   const [sideMenu, setSideMenu] = useState(false);
