@@ -12,7 +12,7 @@ function Navbar() {
   const userData = JSON.parse(
     localStorage.getItem("persist:gree-commerce-portal") || "{}"
   );
-  const user = JSON.parse(userData.user);
+  const user = JSON.parse(userData?.user);
   const logout = userActions;
 
   const [sideMenu, setSideMenu] = useState(false);
