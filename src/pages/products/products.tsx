@@ -9,6 +9,7 @@ function Products() {
     {
       id: number;
       name: string;
+      title: string;
       price: number;
       image: string;
       category: string;
@@ -115,8 +116,8 @@ function Products() {
             error={productsError as { data: string } | undefined}
             products={filteredProducts.map((product) => ({
               id: product.id,
-              image: product.image, // Add the appropriate image property here
-              title: product.name, // Use the name property as the title
+              image: product.image,
+              title: product.title,
               rating: { rate: product.rating.rate },
               price: product.price,
             }))}
