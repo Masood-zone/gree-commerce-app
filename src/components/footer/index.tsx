@@ -40,7 +40,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-6 gap-8">
           {/* Company Info */}
           <div className="md:col-span-2">
-            <h2 className="text-3xl font-bold mb-4">Gree Commerce</h2>
+            <h2 className="text-3xl font-bold mb-4">Gree Mall</h2>
             <p className="text-gray-600 mb-4">
               We have clothes that suits your style and which you're proud to
               wear. From men to women.
@@ -73,7 +73,7 @@ export default function Footer() {
         {/* Copyright and Payment Methods */}
         <div className="mt-8 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-600 mb-4 md:mb-0">
-            Shop.co © 2000-2023, All Rights Reserved
+            Gree Mall © 2023-2024, All Rights Reserved
           </p>
           <div className="flex space-x-1">
             {["visa", "mastercard", "paypal", "applepay", "googlepay"].map(

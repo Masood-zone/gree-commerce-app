@@ -44,14 +44,13 @@ function Login({
         window.location.reload();
       }
     } catch (error) {
-      console.log(error);
       reset();
       toast.error(
         (
           error as {
-            data: string;
+            error: string;
           }
-        ).data
+        ).error
       );
     }
   };

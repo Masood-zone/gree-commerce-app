@@ -20,7 +20,18 @@ function ProductIndex() {
   }, [refetch, isUninitialized]);
 
   if (isLoading)
-    return <div className="container mx-auto px-4 py-8">Loading...</div>;
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="rounded-lg p-4 animate-pulse">
+            <div className="bg-gray-100 h-48 mb-4 rounded-lg"></div>
+            <div className="h-4 bg-gray-100 w-3/4 mb-2"></div>
+            <div className="h-4 bg-gray-100 w-1/2 mb-2"></div>
+            <div className="h-4 bg-gray-100 w-1/4"></div>
+          </div>
+        ))}
+      </div>
+    );
   if (error)
     return (
       <div className="container mx-auto px-4 py-8">

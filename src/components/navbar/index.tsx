@@ -7,12 +7,13 @@ import {
   User,
   X,
 } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "../../redux/store";
 import Auth from "../../pages/auth/auth";
 import { userActions } from "../../redux/user.slice";
 import { Link } from "react-router-dom";
 import { storeApi } from "../../redux/api";
+import SearchResults from "../search";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -27,12 +28,42 @@ function Navbar() {
   const [type, setType] = useState("login");
   const [dropdown, setDropdown] = useState(false);
   const [menu, setMenu] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [showNoResults, setShowNoResults] = useState(false);
 
   const {
     data: categories,
     isLoading,
     error,
   } = storeApi.useGetCategoriesQuery({});
+  const {
+    data: products,
+    isLoading: searchLoading,
+    error: searchError,
+  } = storeApi.useGetProductsQuery({});
+
+  const handleSearch = useCallback(() => {
+    const filtered = products?.filter((product: ProductItem) =>
+      product?.title?.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    if (filtered.length > 0) {
+      setFilteredProducts(filtered);
+      setShowNoResults(false);
+    } else {
+      setFilteredProducts([]);
+      setShowNoResults(true);
+    }
+  }, [searchQuery, products]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleSearch();
+    }, 300); // Wait for 300ms after last keystroke
+
+    return () => clearTimeout(timer);
+  }, [searchQuery, handleSearch]);
 
   const toggleSideMenu = () => {
     setSideMenu(!sideMenu);
@@ -68,7 +99,7 @@ function Navbar() {
             <span className="text-3xl font-bold max-sm:text-2xl">
               <Link to="/" className="cursor-pointer">
                 {" "}
-                Gree Commerce
+                Gree Mall
               </Link>
             </span>
           )}
@@ -123,13 +154,46 @@ function Navbar() {
         {/* Search  and User Section */}
         <div className="flex items-center space-x-4 w-full justify-center">
           <label className="input input-bordered flex items-center rounded-full gap-2 w-full relative max-md:hidden">
-            <input type="text" className="grow" placeholder="Search" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="grow"
+              placeholder="Search"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
+            />
             <Search size={24} />
           </label>
           {/* Search button on medium screens */}
           <button onClick={toggleSearch} className="md:hidden lg:hidden">
             <Search size={24} className="cursor-pointer " />
           </button>
+          {/* Search results modal */}
+          {searchQuery !== "" && (
+            <div className="absolute top-20 w-[95%] md:max-w-7xl h-96 mx-auto shadow-2xl z-20 p-4 flex items-center left-0 right-0 border justify-center bg-white overflow-y-scroll max-sm:mt-14 max-[499px]:mt-14">
+              {searchLoading ? (
+                <div className="flex items-center gap-4 mx-auto justify-center">
+                  <span className="loading loading-spinner loading-lg"></span>
+                  Loading...
+                </div>
+              ) : searchError ? (
+                <div className="text-center text-red-500 font-semibold">
+                  Something went wrong. Please try again later.
+                </div>
+              ) : filteredProducts.length > 0 ? (
+                <SearchResults results={filteredProducts} />
+              ) : showNoResults ? (
+                <p className="text-xl font-semibold text-red-500">
+                  Query not found, Please try again!
+                </p>
+              ) : null}
+            </div>
+          )}
+
           {/* Searchbar toggle */}
           {searchOpen ? (
             <div
@@ -138,8 +202,16 @@ function Navbar() {
             "
             >
               <label className="input input-bordered flex items-center rounded-full gap-2 w-full relative shadow-lg">
-                <input type="text" className="grow" placeholder="Search" />
-                <Search size={24} />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="grow"
+                  placeholder="Search"
+                />
+                <button>
+                  <Search size={24} />
+                </button>
               </label>
             </div>
           ) : null}
@@ -153,13 +225,13 @@ function Navbar() {
                 </span>
               </span>
               <button onClick={toggleDropdown}>
-                <User size={34} className="cursor-pointer" />
+                <User size={24} className="cursor-pointer" />
               </button>
               <Link
                 to="/cart"
                 className="flex items-center gap-2 cursor-pointer"
               >
-                <ShoppingCart size={34} className="cursor-pointer" />
+                <ShoppingCart size={24} className="cursor-pointer" />
               </Link>
 
               {dropdown ? (
@@ -239,15 +311,24 @@ function Navbar() {
                 )}
               </label>
               {menu ? (
-                <ul className="menu bg-gray-100 pl-0">
-                  {categories?.map((category: string, index: number) => (
-                    <li key={index} className=" capitalize">
-                      <Link to={`/products/category/${category}`}>
-                        {category}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+                isLoading ? (
+                  <div className="flex items-center gap-4 mx-auto justify-start bg-gray-100">
+                    <span className="loading loading-spinner loading-xs"></span>
+                    Loading...
+                  </div>
+                ) : error ? (
+                  <div className="text-red-500">Failed to fetch</div>
+                ) : (
+                  <ul className="menu bg-gray-100 pl-0">
+                    {categories?.map((category: string, index: number) => (
+                      <li key={index} className=" capitalize">
+                        <Link to={`/products/category/${category}`}>
+                          {category}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )
               ) : (
                 ""
               )}

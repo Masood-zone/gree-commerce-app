@@ -15,6 +15,8 @@ function ProductDetail() {
   } = storeApi.useGetProductDetailQuery(id);
   const [addToCartItem, { isLoading: isAddingToCart }] =
     storeApi.useAddToCartMutation();
+  const userData = localStorage.getItem("persist:gree-commerce-portal");
+  const user = userData ? JSON.parse(JSON.parse(userData).user || "{}") : null;
   const [selectedColor, setSelectedColor] = useState(0);
   const [selectedSize, setSelectedSize] = useState("Large");
   const [quantity, setQuantity] = useState(1);
@@ -72,10 +74,14 @@ function ProductDetail() {
       ],
     };
 
+    if (!user.isAuthenticating) {
+      toast.error("Please login to add product to cart.");
+      return;
+    }
     try {
       const response = await addToCartItem(payload).unwrap();
-      console.log(response);
       toast.success("Product added to cart!");
+      return response;
     } catch (error) {
       console.error(error);
       toast.error("Failed to add product to cart.");

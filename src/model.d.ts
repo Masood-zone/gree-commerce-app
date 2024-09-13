@@ -45,6 +45,14 @@ type User = {
   __v: number;
 };
 
+interface ProductItem {
+  id: number;
+  title: string;
+  image: string;
+  price: number;
+  description: string;
+}
+
 declare module "redux-persist/es/persistReducer";
 declare module "redux-persist/es/persistStore";
 declare module "redux-persist/es/storage/createWebStorage";
