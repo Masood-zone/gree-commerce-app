@@ -57,7 +57,10 @@ function ProductIndex() {
               key={product.id}
               className="bg-white rounded-lg shadow-md overflow-hidden"
             >
-              <Link to={`/products/${product.id}`}>
+              <Link
+                to={`/products/${product.id}`}
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              >
                 <img
                   src={product.image}
                   alt={product.title}

@@ -69,7 +69,7 @@ function CheckoutSuccess() {
               ) => (
                 <div
                   key={index}
-                  className="flex justify-between items-center mb-2"
+                  className="flex justify-between items-center mb-2 max-[399px]:text-sm py-1"
                 >
                   <span>
                     {item.title} (x{item.quantity})

@@ -43,7 +43,14 @@ function YouMightAlsoLike() {
                 />
                 <div className="p-4">
                   <h3 className="font-semibold mb-2 truncate">
-                    <Link to={`/products/${product.id}`}>{product.title}</Link>
+                    <Link
+                      to={`/products/${product.id}`}
+                      onClick={() =>
+                        window.scrollTo({ top: 0, behavior: "smooth" })
+                      }
+                    >
+                      {product.title}
+                    </Link>
                   </h3>
                   <div className="flex items-center mb-2">
                     {[...Array(5)].map((_, i) => (

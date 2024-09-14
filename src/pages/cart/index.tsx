@@ -98,46 +98,51 @@ export default function Cart() {
       <h1 className="text-4xl font-bold mb-8">YOUR CART</h1>
 
       <div className="flex flex-col lg:flex-row gap-8">
+        {/* Cart Items */}
         <div className="lg:w-2/3">
-          {cartItems.map((item) => (
+          {cartItems?.map((item) => (
             <div
               key={item.id}
-              className="flex items-center gap-4 bg-white p-4 rounded-lg shadow mb-4"
+              className="flex items-center gap-4 bg-white p-4 rounded-lg shadow mb-4 max-[399px]:flex-col justify-between"
             >
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-24 h-24 object-cover rounded"
-              />
-              <div className="flex-grow">
-                <h3 className="font-bold">{item.title}</h3>
-                <p className="font-bold mt-2">${item.price.toFixed(2)}</p>
+              <div className="flex items-center gap-4">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-24 h-24 object-cover rounded"
+                />
+                <div className="flex-grow">
+                  <h3 className="font-bold">{item.title}</h3>
+                  <p className="font-bold mt-2">${item.price.toFixed(2)}</p>
+                </div>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center max-[399px]:mr-auto">
                 <button
-                  className="btn btn-ghost btn-sm"
+                  className="btn btn-square text-lg"
                   onClick={() => updateQuantity(item.id, item.quantity - 1)}
                 >
                   -
                 </button>
-                <span className="mx-2">{item.quantity}</span>
+                <span className="mx-2 max-[399px]:mx-5 py-2 max-[399px]:px-4 rounded-md text-xl max-[399px]:text-xl max-[399px]:bg-black max-[399px]:text-white">
+                  {item.quantity}
+                </span>
                 <button
-                  className="btn btn-ghost btn-sm"
+                  className="btn btn-square text-lg"
                   onClick={() => updateQuantity(item.id, item.quantity + 1)}
                 >
                   +
                 </button>
+                <button
+                  className="btn btn-ghost btn-circle"
+                  onClick={() => removeItem(item.id)}
+                >
+                  <Trash2 size={20} className="text-red-500" />
+                </button>
               </div>
-              <button
-                className="btn btn-ghost btn-circle"
-                onClick={() => removeItem(item.id)}
-              >
-                <Trash2 size={20} className="text-red-500" />
-              </button>
             </div>
           ))}
         </div>
-
+        {/* Summary */}
         <div className="lg:w-1/3">
           <div className="bg-white p-6 rounded-lg shadow">
             <h2 className="text-xl font-bold mb-4">Order Summary</h2>
@@ -174,7 +179,10 @@ export default function Cart() {
               </button>
             </div>
             <button
-              onClick={() => navigate("/checkout")}
+              onClick={() => {
+                navigate("/checkout");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
               className="btn bg-black text-white rounded-full hover:bg-gray-900 w-full"
             >
               Go to Checkout

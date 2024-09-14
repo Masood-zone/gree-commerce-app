@@ -43,7 +43,7 @@ export default function Footer() {
             <h2 className="text-3xl font-bold mb-4">Gree Mall</h2>
             <p className="text-gray-600 mb-4">
               We have clothes that suits your style and which you're proud to
-              wear. From men to women.
+              wear. From men to women,electronics, jewellries we have it all.
             </p>
             <div className="flex space-x-4">
               <Twitter className="text-gray-600 hover:text-gray-800 cursor-pointer" />

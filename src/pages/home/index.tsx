@@ -1,9 +1,6 @@
+import { BrowseByCategory } from "../../components/products/browseByCategory";
 import Banner from "../../components/ui/banner";
-import {
-  BrowseByCategory,
-  NewArrivals,
-  TopProducts,
-} from "../../components/ui/products";
+import { NewArrivals, TopProducts } from "../../components/ui/products";
 
 export default function Home() {
   return (

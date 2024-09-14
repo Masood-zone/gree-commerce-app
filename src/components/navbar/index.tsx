@@ -97,7 +97,11 @@ function Navbar() {
             ""
           ) : (
             <span className="text-3xl font-bold max-sm:text-2xl">
-              <Link to="/" className="cursor-pointer">
+              <Link
+                to="/"
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                className="cursor-pointer"
+              >
                 {" "}
                 Gree Mall
               </Link>
@@ -133,7 +137,12 @@ function Navbar() {
               ) : (
                 categories?.map((category: string, index: number) => (
                   <li key={index} className=" px-2 py-2 capitalize">
-                    <Link to={`/products/category/${category}`}>
+                    <Link
+                      to={`/products/category/${category}`}
+                      onClick={() =>
+                        window.scrollTo({ top: 0, behavior: "smooth" })
+                      }
+                    >
                       {category}
                     </Link>
                   </li>
@@ -141,14 +150,14 @@ function Navbar() {
               )}
             </ul>
           </div>
-          <a href="#" className="hover:text-gray-600">
+          <a href="/products" className="hover:text-gray-600">
             On Sale
           </a>
-          <a href="#" className="hover:text-gray-600">
+          <a href="/products" className="hover:text-gray-600">
             New Arrivals
           </a>
-          <a href="#" className="hover:text-gray-600">
-            Brands
+          <a href="#category" className="hover:text-gray-600">
+            Categories
           </a>
         </div>
         {/* Search  and User Section */}
@@ -185,7 +194,10 @@ function Navbar() {
                   Something went wrong. Please try again later.
                 </div>
               ) : filteredProducts.length > 0 ? (
-                <SearchResults results={filteredProducts} />
+                <SearchResults
+                  results={filteredProducts}
+                  setSearchQuery={setSearchQuery}
+                />
               ) : showNoResults ? (
                 <p className="text-xl font-semibold text-red-500">
                   Query not found, Please try again!
@@ -237,7 +249,14 @@ function Navbar() {
               {dropdown ? (
                 <ul className="absolute w-32 top-14 right-3 bg-white shadow-lg flex flex-col  z-10">
                   <li className="hover:text-gray-600 hover:bg-gray-200 px-2 py-2">
-                    <Link to="/profile">Profile</Link>
+                    <Link
+                      to="/profile"
+                      onClick={() =>
+                        window.scrollTo({ top: 0, behavior: "smooth" })
+                      }
+                    >
+                      Profile
+                    </Link>
                   </li>
                   <li className="hover:text-gray-600 hover:bg-gray-200 px-2 py-2">
                     <button
@@ -322,7 +341,12 @@ function Navbar() {
                   <ul className="menu bg-gray-100 pl-0">
                     {categories?.map((category: string, index: number) => (
                       <li key={index} className=" capitalize">
-                        <Link to={`/products/category/${category}`}>
+                        <Link
+                          to={`/products/category/${category}`}
+                          onClick={() =>
+                            window.scrollTo({ top: 0, behavior: "smooth" })
+                          }
+                        >
                           {category}
                         </Link>
                       </li>

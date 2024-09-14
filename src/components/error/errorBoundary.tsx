@@ -1,11 +1,12 @@
-import { AlertCircle, RefreshCw } from "lucide-react";
-import { useRouteError } from "react-router-dom";
+import { AlertCircle, ChevronLeft, RefreshCw } from "lucide-react";
+import { useNavigate, useRouteError } from "react-router-dom";
 
 interface ErrorType {
   message?: string;
 }
 
 function ErrorBoundary() {
+  const navigate = useNavigate();
   const error: ErrorType = useRouteError() as ErrorType;
 
   const handleRefresh = () => {
@@ -23,13 +24,22 @@ function ErrorBoundary() {
           <p className="text-red-500 mb-6">
             Error: {error?.message || "An unexpected error occurred."}
           </p>
-          <button
-            onClick={handleRefresh}
-            className="inline-flex items-center px-12 py-2 border border-transparent text-base font-medium shadow-sm text-white bg-black rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-          >
-            <RefreshCw className="mr-2 h-5 w-5" />
-            Refresh Page
-          </button>
+          <div className="flex max-sm:flex-col items-center gap-5 w-full">
+            <button
+              onClick={handleRefresh}
+              className="inline-flex items-center px-12 py-2 border border-transparent text-base font-medium shadow-sm text-white bg-black rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+            >
+              <RefreshCw className="mr-2 h-5 w-5" />
+              Refresh Page
+            </button>
+            <button
+              onClick={() => navigate(-1)}
+              className="inline-flex items-center px-12 py-2 border border-transparent text-base font-medium shadow-sm text-white bg-black rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+            >
+              <ChevronLeft className="mr-2 h-5 w-5" />
+              Go Back
+            </button>
+          </div>
         </div>
       </div>
     </div>

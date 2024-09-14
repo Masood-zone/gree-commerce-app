@@ -56,7 +56,7 @@ function Login({
   };
   return (
     <>
-      <div className="bg-white p-6 w-96 rounded-lg shadow-lg">
+      <div className="bg-white p-6 w-96 max-[399px]:w-80 rounded-lg shadow-lg">
         {/* Header */}
         <div className="relative">
           <h1 className="text-3xl font-semibold">Welcome Back</h1>
